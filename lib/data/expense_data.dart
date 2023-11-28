@@ -1,10 +1,8 @@
-import 'dart:html';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_expense/datetime/datetime_helper.dart';
-
 import '../models/expense_item.dart';
 
-class ExpenseData {
+class ExpenseData extends ChangeNotifier {
   // list of all the expenses
   List<ExpenseItem> overallExpenseList = [];
 
@@ -16,11 +14,15 @@ class ExpenseData {
   // add new expense
   void addNewExpense(ExpenseItem expenseItem) {
     overallExpenseList.add(expenseItem);
+
+    notifyListeners();
   }
 
   // delete expense
   void deleteExpense(ExpenseItem expenseItem) {
     overallExpenseList.remove(expenseItem);
+
+    notifyListeners();
   }
 
   // get week day (Monday, Tuesday, etc) from a DateTime object
@@ -99,6 +101,7 @@ DateTime? startOfWeekDate() {
       if ( dailyExpenseSummary.containsKey(date)) {
         double currentAmount = dailyExpenseSummary[date]!;
         currentAmount += amount;
+        dailyExpenseSummary[date] = currentAmount;
       } else {
         dailyExpenseSummary.addAll({date: amount});
       }
