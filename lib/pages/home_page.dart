@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expense/components/expense_tile.dart';
 import 'package:flutter_expense/data/expense_data.dart';
-import 'package:flutter_expense/datetime/datetime_helper.dart';
 import 'package:flutter_expense/models/expense_item.dart';
 import 'package:provider/provider.dart';
 
@@ -29,11 +29,10 @@ class _HomePageState extends State<HomePage> {
           body: ListView.builder(
               itemCount: value.getAllExpenseList().length,
               itemBuilder: (context, index) =>
-                  ListTile(
-                    title: Text(value.getAllExpenseList()[index].name),
-                    subtitle: Text(convertDateTimeToString(value.getAllExpenseList()[index].dateTime)),
-                    trailing: Text('\$${value.getAllExpenseList()[index].amount}'),
-                  )),
+                  ExpenseTile(
+                      name: value.getAllExpenseList()[index].name,
+                      amount: value.getAllExpenseList()[index].amount,
+                      dateTime: value.getAllExpenseList()[index].dateTime)),
         ));
   }
 
